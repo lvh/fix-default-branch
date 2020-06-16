@@ -1,0 +1,31 @@
+{:paths ["resources" "src"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.2-alpha1"}
+        ;; yaml is for parsing `hub` config files
+        clj-commons/clj-yaml {:mvn/version "0.7.1"}
+        ;; talking to github api:
+        org.martinklepsch/clj-http-lite {:mvn/version "0.4.3"}
+        cheshire {:mvn/version "5.10.0"}
+        ;; url munging
+        lambdaisland/uri {:mvn/version "1.4.49"}
+        ;; cli:
+        org.clojure/tools.cli {:mvn/version "1.0.194"}}
+ :aliases
+ {:test
+  {:main-opts ["-m" "kaocha.runner"]
+   :extra-paths ["test-resources" "test"]
+   :extra-deps {lambdaisland/kaocha {:mvn/version "1.0.632"}
+                org.clojure/test.check {:mvn/version "RELEASE"}}}
+
+  :native-image
+  {:main-opts ["-m clj.native-image io.lvh.emancipate"
+               "--verbose"
+               "--no-fallback"
+               "-Dclojure.compiler.direct-linking=true"
+               "-H:Name=emancipate"
+               "-H:+ReportExceptionStackTraces"
+               "--initialize-at-build-time"
+               "--report-unsupported-elements-at-runtime"
+               "--allow-incomplete-classpath"]
+   :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+   :extra-deps {clj.native-image {:git/url "https://github.com/taylorwood/clj.native-image.git"
+                                  :sha "602587dfb5243ea8c72ed3e967c37c1f9d611723"}}}}}
