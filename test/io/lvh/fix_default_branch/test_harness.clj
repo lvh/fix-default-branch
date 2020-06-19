@@ -1,4 +1,5 @@
 (ns io.lvh.fix-default-branch.test-harness
+  {:clj-kondo/config {:linters {:private-call {:level :off}}}}
   (:require
    [io.lvh.fix-default-branch.github :as gh]
    [io.lvh.fix-default-branch.git :as git]
