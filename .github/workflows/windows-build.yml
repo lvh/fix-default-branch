@@ -16,10 +16,6 @@ jobs:
         with:
           graalvm-version: '20.1.0.java11'
 
-      - name: Setup native-image
-        run: |
-          gu install native-image
-
       - name: Setup Clojure
         uses: DeLaGuardo/setup-clojure@2.0
         with:
