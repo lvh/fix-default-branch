@@ -16,10 +16,16 @@ jobs:
         with:
           graalvm-version: '20.1.0.java11'
 
-      - name: Setup Clojure
-        uses: DeLaGuardo/setup-clojure@2.0
-        with:
-          tools-deps: "latest"
+      - name: Setup Clojure manually
+        run: .\.github\ClojureSetupHeadless.ps1
+
+      # Uncomment this when it supports Windows:
+      # https://github.com/DeLaGuardo/setup-clojure/issues/1
+      #
+      # - name: Setup Clojure
+      #   uses: DeLaGuardo/setup-clojure@2.0
+      #   with:
+      #     tools-deps: "latest"
 
       - name: Show Clojure env details
         run: clojure -Sdescribe
