@@ -1,5 +1,9 @@
 # fix-default-branch
 
+![CI](https://github.com/lvh/fix-default-branch/workflows/CI/badge.svg)
+![macOS build](https://github.com/lvh/fix-default-branch/workflows/macOS%20build/badge.svg)
+![Linux build](https://github.com/lvh/fix-default-branch/workflows/Linux%20build/badge.svg)
+
 **☢ Experimental ☢**
 
 No more `master`. This will (destructively!) rename `master` to something else
