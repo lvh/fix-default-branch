@@ -3,7 +3,7 @@ name: macOS build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ trunk ]
 
 jobs:
   build:
