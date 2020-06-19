@@ -4,8 +4,6 @@
    [io.lvh.fix-default-branch.test-harness :as h]
    [clojure.test :as t]))
 
-
-
 (t/deftest end-to-end-test
   (t/is (= #::h{:result nil
                 :calls
