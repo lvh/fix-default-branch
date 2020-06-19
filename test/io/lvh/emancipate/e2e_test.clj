@@ -21,16 +21,6 @@
                  #::h{:fn 'io.lvh.emancipate.git/git!
                       :args ["branch" "--move" "master" "trunk"]}
 
-                 #::h{:fn 'io.lvh.emancipate.git/git!
-                      :args ["push" "origin" "trunk"]}
-                 #::h{:fn 'io.lvh.emancipate.git/git!
-                      :args ["push" "origin" ":master"]}
-
-                 #::h{:fn 'io.lvh.emancipate.git/git!
-                      :args ["push" "origin" "trunk"]}
-                 #::h{:fn 'io.lvh.emancipate.git/git!
-                      :args ["push" "origin" ":master"]}
-
                  #::h{:fn 'clj-http.lite.client/request
                       :request
                       {:method :patch
@@ -38,5 +28,10 @@
                        :headers {"Accept" "application/vnd.github.v3+json"
                                  "Authorization" "token abc123"
                                  "Content-Type" "application/json; charset=utf-8"}
-                       :body "{\"default_branch\":\"trunk\"}"}}]}
+                       :body "{\"default_branch\":\"trunk\"}"}}
+
+                 #::h{:fn 'io.lvh.emancipate.git/git!
+                      :args ["push" "origin" "trunk"]}
+                 #::h{:fn 'io.lvh.emancipate.git/git!
+                      :args ["push" "origin" ":master"]}]}
            (h/with-test-harness (e/-main)))))
