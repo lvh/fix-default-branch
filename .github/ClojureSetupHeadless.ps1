@@ -1,5 +1,11 @@
 #!/usr/bin/env pwsh
 
+# this script is adjusted from the one I got on the wiki[*] because the one on
+# the wiki required manual intervention to select an installation destination,
+# which of course won't work too well in a headless CI environment :)
+
+# [*]: https://github.com/clojure/tools.deps.alpha/wiki/clj-on-Windows because
+
 $ErrorActionPreference = 'Stop'
 
 $Version = '1.10.1.547'
