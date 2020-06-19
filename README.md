@@ -12,17 +12,17 @@ the kind that are named `<USER>/<USER>.github.io` and serve up GitHub Pages
 content. GitHub mandates that these are called `master`. GitHub will need to fix
 that one.
 
-Existing users will get the somewhat unhelpful error message:
+Existing users will get the somewhat unhelpful error message when they attempt
+to pull from or push to master after running this tool:
 
 ```
 fatal: couldn't find remote ref master
 ```
 
-... when they attempt to pull from or push to master, which will no longer exist
-after running this. GitHub would need something like a "rename branch" feature
-(similar to how "rename repo" exists) to fix this. Users should be OK to just
-run `./fix-default-branch`, but of course that assumes they have that installed
-and recognize the error message.
+GitHub would need something like a "rename branch" feature (similar to how
+"rename repo" exists) to fix this. Users should be OK to just run
+`fix-default-branch`, but of course that assumes they have that installed and
+recognize the error message.
 
 ## Installation
 
