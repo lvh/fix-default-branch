@@ -38,9 +38,9 @@ jobs:
         run: clojure -A:native-image
 
       - name: Run upx
-        run: upx wernicke
+        run: upx fix-default-branch
 
       - uses: actions/upload-artifact@v2
         with:
-          name: wernicke-linux-amd64
-          path: wernicke
+          name: fix-default-branch-linux-amd64
+          path: fix-default-branch

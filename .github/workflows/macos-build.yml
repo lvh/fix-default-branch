@@ -38,9 +38,9 @@ jobs:
         run: clojure -A:native-image
 
       - name: Run upx
-        run: upx wernicke
+        run: upx fix-default-branch
 
       - uses: actions/upload-artifact@v2
         with:
-          name: wernicke-macos
-          path: wernicke
+          name: fix-default-branch-macos
+          path: fix-default-branch
