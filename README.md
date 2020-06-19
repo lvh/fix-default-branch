@@ -5,33 +5,47 @@
 No more `master`. This will (destructively!) rename `master` to something else
 (default: `trunk`), and change the GitHub default branch for the repo.
 
-[hub]: https://github.com/github/hub
-[gh]: https://github.com/cli/cli
+## Caveats
 
-Note that this does *not* work on "user pages" GitHub Pages repositories. "User
-pages" are the kind that are named `<USER>/<USER>.github.io`. GitHub will need
-to fix that one.
+This does *not* work on "user pages" GitHub Pages repositories. "User pages" are
+the kind that are named `<USER>/<USER>.github.io` and serve up GitHub Pages
+content. GitHub mandates that these are called `master`. GitHub will need to fix
+that one.
 
-This is intended as a tool to make changing your default branch easier. Please
-do not use it to harass people.
+Existing users will get the somewhat unhelpful error message:
+
+```
+fatal: couldn't find remote ref master
+```
+
+... when they attempt to pull from or push to master, which will no longer exist
+after running this. GitHub would need something like a "rename branch" feature
+(similar to how "rename repo" exists) to fix this. Users should be OK to just
+run `./fix-default-branch`, but of course that assumes they have that installed
+and recognize the error message.
 
 ## Installation
 
-Download from https://github.com/lvh/fix-default-branch.
+Download from https://github.com/lvh/fix-default-branch/releases.
 
 ## How to use
 
 Typing `fix-default-branch` in a Git repo will:
 
 * Rename `master` to `trunk` (unless you set something else with `--new-branch`)
-* Attempt to push `trunk` to every remote (it is not this tool's job to figure out access control)
-* For every GitHub remote, attempt to patch the default branch to the new branch
+* Attempt to push `trunk` to every push remote
+* For every push remote on GitHub, attempt to patch the default branch to the new branch
 
 ## Details
 
-This will never use force, implicitly (e.g. `git branch -D`, `git branch -M`) or
-explicitly (`--force`), for deleting or renaming branches.
+This tool will never use force, implicitly (e.g. `git branch -D`, `git branch
+-M`) or explicitly (`--force`), for deleting or renaming branches.
 
+This tool talks to GitHub by using the OAuth tokens for [hub][hub] or [gh][gh].
+It assumes one of those two is installed.
+
+[hub]: https://github.com/github/hub
+[gh]: https://github.com/cli/cli
 
 ## Development
 
