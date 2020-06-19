@@ -1,10 +1,12 @@
 (ns io.lvh.emancipate.git
   "Tools for modifying local Git repositories."
   (:require [clojure.java.shell :refer [sh]]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [taoensso.timbre :as log]))
 
 (defn ^:private git!
   [& args]
+  (log/debug "running git command: git" args)
   (let [{:keys [exit] :as res} (apply sh "git" args)]
     (if (zero? exit)
       res
@@ -27,13 +29,14 @@
 
 (defn delete-branch-remotely!
   "Deletes a branch on the given remote."
-  [branch-name remote]
+  [remote branch-name]
   (push-branch! remote (str ":" branch-name)))
 
 (def ^:private git-remote-re
   #"(?<name>.*?)\s+(?<url>.*?)\s+\((?<purpose>.*?)\)")
 
 (defn remotes
+  "List and parse all the remotes."
   []
   (let [{:keys [out]} (git! "remote" "--verbose")]
     (->> out

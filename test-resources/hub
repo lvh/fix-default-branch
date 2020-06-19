@@ -1,0 +1,4 @@
+github.com:
+- user: lvh
+  oauth_token: abc123
+  protocol: https

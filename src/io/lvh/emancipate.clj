@@ -2,7 +2,10 @@
   (:gen-class)
   (:require
    [io.lvh.emancipate.github :as gh]
-   [io.lvh.emancipate.git :as git]))
+   [io.lvh.emancipate.git :as git]
+   [taoensso.timbre :as log]))
+
+(require '[io.lvh.emancipate.https]) ;; for side effect
 
 (defn -main
   "Makes the current branch not be master."
@@ -10,13 +13,24 @@
   (let [old-branch "master"
         new-branch "trunk"
         remotes (git/remotes)
-        gh-remotes (gh/github-remotes remotes)
-        gh-details #::gh{:token (gh/get-token!) :new-branch new-branch}]
+        token (gh/get-token!)
+        gh-details #::gh{:token token :new-branch new-branch}]
+    (log/info "renaming" old-branch "to" new-branch)
     (git/rename-branch! old-branch new-branch)
 
-    (doseq [gh-remote gh-remotes]
-      (gh/set-default-branch! (merge gh-remote gh-details)))
+    (log/info "found remotes" remotes)
+    (doseq [{::git/keys [name]} remotes]
+      (log/info "pushing branch" new-branch "to remote" name)
+      (git/push-branch! name new-branch)
+      (log/info "deleting branch" old-branch "from remote" name)
+      (git/delete-branch-remotely! name old-branch))
 
-    (doseq [{::git/keys [remote-name]} remotes]
-      (git/push-branch! remote-name new-branch)
-      (git/delete-branch! remote-name old-branch))))
+    (if (some? token)
+      (doseq [gh-remote (->> remotes
+                             ;; push is a proxy for repo management access and
+                             ;; also conveniently dedupes push/fetch remotes
+                             (filter (comp #{"push"} ::git/purpose))
+                             gh/github-remotes)]
+        (log/info "setting default branch for gh repo" (::git/name gh-remote))
+        (gh/set-default-branch! (merge gh-remote gh-details)))
+      (log/error "could not find github token to set default branches"))))
