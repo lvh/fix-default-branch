@@ -8,7 +8,9 @@
         ;; url munging
         lambdaisland/uri {:mvn/version "1.4.49"}
         ;; cli:
-        org.clojure/tools.cli {:mvn/version "1.0.194"}}
+        org.clojure/tools.cli {:mvn/version "1.0.194"}
+        ;; logging
+        com.taoensso/timbre {:mvn/version "4.10.0"}}
  :aliases
  {:test
   {:main-opts ["-m" "kaocha.runner"]
