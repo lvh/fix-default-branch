@@ -19,11 +19,11 @@
                 org.clojure/test.check {:mvn/version "RELEASE"}}}
 
   :native-image
-  {:main-opts ["-m clj.native-image io.lvh.emancipate"
+  {:main-opts ["-m clj.native-image io.lvh.fix-default-branch"
                "--verbose"
                "--no-fallback"
                "-Dclojure.compiler.direct-linking=true"
-               "-H:Name=emancipate"
+               "-H:Name=fix-default-branch"
                "-H:+ReportExceptionStackTraces"
                "--initialize-at-build-time"
                "--report-unsupported-elements-at-runtime"

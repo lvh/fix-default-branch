@@ -1,4 +1,4 @@
-(ns io.lvh.emancipate.git
+(ns io.lvh.fix-default-branch.git
   "Tools for modifying local Git repositories."
   (:require [clojure.java.shell :refer [sh]]
             [clojure.string :as str]

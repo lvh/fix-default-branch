@@ -1,10 +1,10 @@
-(ns io.lvh.emancipate.github
+(ns io.lvh.fix-default-branch.github
   "Tools for talking to GitHub."
   (:require
    [clj-yaml.core :as yaml]
    [cheshire.core :as json]
    [clj-http.lite.client :as http]
-   [io.lvh.emancipate.git :as git]))
+   [io.lvh.fix-default-branch.git :as git]))
 
 (defn ^:private prop
   "Get a Java system property."

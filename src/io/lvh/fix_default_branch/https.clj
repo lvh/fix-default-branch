@@ -1,4 +1,4 @@
-(ns io.lvh.emancipate.https
+(ns io.lvh.fix-default-branch.https
   (:import (java.lang.reflect Field Modifier)))
 
 (def ^:private modifiers-field

@@ -1,4 +1,4 @@
-# emancipate
+# fix-default-branch
 
 **☢ Experimental ☢**
 
@@ -17,11 +17,11 @@ do not use it to harass people.
 
 ## Installation
 
-Download from https://github.com/lvh/emancipate.
+Download from https://github.com/lvh/fix-default-branch.
 
 ## How to use
 
-Typing `emancipate` in a Git repo will:
+Typing `fix-default-branch` in a Git repo will:
 
 * Rename `master` to `trunk` (unless you set something else with `--new-branch`)
 * Attempt to push `trunk` to every remote (it is not this tool's job to figure out access control)
@@ -37,7 +37,7 @@ explicitly (`--force`), for deleting or renaming branches.
 
 Run the project directly:
 
-    $ clj -m io.lvh.emancipate
+    $ clj -m io.lvh.fix-default-branch
 
 Run the project's tests:
 

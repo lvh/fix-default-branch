@@ -1,7 +1,7 @@
-(ns io.lvh.emancipate.test-harness
+(ns io.lvh.fix-default-branch.test-harness
   (:require
-   [io.lvh.emancipate.github :as gh]
-   [io.lvh.emancipate.git :as git]
+   [io.lvh.fix-default-branch.github :as gh]
+   [io.lvh.fix-default-branch.git :as git]
    [clj-http.lite.client :as http]
    [clojure.string :as str]
    [clojure.java.io :as io]

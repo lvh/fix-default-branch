@@ -1,11 +1,11 @@
-(ns io.lvh.emancipate
+(ns io.lvh.fix-default-branch
   (:gen-class)
   (:require
-   [io.lvh.emancipate.github :as gh]
-   [io.lvh.emancipate.git :as git]
+   [io.lvh.fix-default-branch.github :as gh]
+   [io.lvh.fix-default-branch.git :as git]
    [taoensso.timbre :as log]))
 
-(require '[io.lvh.emancipate.https]) ;; for side effect
+(require '[io.lvh.fix-default-branch.https]) ;; for side effect
 
 (defn -main
   "Makes the current branch not be master."
