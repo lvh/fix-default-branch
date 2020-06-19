@@ -9,7 +9,7 @@
 
 (defn -main
   "Makes the current branch not be master."
-  [& args]
+  [& _]
   (let [old-branch "master"
         new-branch "trunk"
         push-remotes (filter (comp #{"push"} ::git/purpose) (git/remotes))
