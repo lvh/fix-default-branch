@@ -37,7 +37,7 @@ jobs:
         run: choco install upx
 
       - name: Build native-image
-        run: clojure -A:native-image
+        run: Get-ChildItem -Path "$env:GRAALVM_HOME\bin" | Format-Table; clojure -A:native-image
         env:
           GRAALVM_HOME: ${{ env.JAVA_HOME }}
 
