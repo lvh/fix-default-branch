@@ -37,7 +37,9 @@ jobs:
         run: choco install upx
 
       - name: Build native-image
-        run: $env:GRAALVM_HOME="$env:JAVA_HOME"; clojure -A:native-image
+        run: clojure -A:native-image
+        env:
+          GRAALVM_HOME: ${{ env.JAVA_HOME }}
 
       - name: Run upx
         run: upx fix-default-branch
