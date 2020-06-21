@@ -27,19 +27,34 @@ jobs:
       #   with:
       #     tools-deps: "latest"
 
+      # - name: Install VC2017 components
+      #   # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
+      #   run: >
+      #     choco install visualstudio2017community
+      #       --version 15.9.17.0
+      #       --no-progress
+      #       --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.ARM64
+      #                             --add Microsoft.VisualStudio.Component.VC.CMake.Project"
+
+      - name: Install native-image
+        run: $env:GRAALVM_HOME\bin\gu.cmd install native-image
+
+      - name: List GraalVM bin contents
+        run: Get-ChildItem -Path "$env:GRAALVM_HOME\bin" | Format-Table
+
       - name: Show Clojure env details
         run: clojure -Sdescribe
 
       - name: Run tests
         run: clojure -A:test
 
-      - name: Install upx
-        run: choco install upx
-
       - name: Build native-image
-        run: Get-ChildItem -Path "$env:GRAALVM_HOME\bin" | Format-Table; clojure -A:native-image
+        run: clojure -A:native-image
         env:
           GRAALVM_HOME: ${{ env.JAVA_HOME }}
+
+      - name: Install upx
+        run: choco install upx
 
       - name: Run upx
         run: upx fix-default-branch
