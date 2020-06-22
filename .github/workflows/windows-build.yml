@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Maven cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Setup GraalVM CE
         uses: DeLaGuardo/setup-graalvm@3
         with:
@@ -32,6 +40,12 @@ jobs:
 
       - name: Run tests
         run: clojure -A:test
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
 
       - name: Install VC2017 components
         # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.

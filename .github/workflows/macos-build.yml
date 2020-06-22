@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Maven cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Setup GraalVM CE
         uses: DeLaGuardo/setup-graalvm@3
         with:
