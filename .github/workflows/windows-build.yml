@@ -19,7 +19,7 @@ jobs:
       - name: Setup Clojure manually
         run: .\.github\ClojureSetupHeadless.ps1
 
-      # Uncomment this when it supports Windows:
+      # Replace "Setup Clojure manually" with this, once it supports Windows:
       # https://github.com/DeLaGuardo/setup-clojure/issues/1
       #
       # - name: Setup Clojure
@@ -27,14 +27,15 @@ jobs:
       #   with:
       #     tools-deps: "latest"
 
-      # - name: Install VC2017 components
-      #   # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
-      #   run: >
-      #     choco install visualstudio2017community
-      #       --version 15.9.17.0
-      #       --no-progress
-      #       --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.ARM64
-      #                             --add Microsoft.VisualStudio.Component.VC.CMake.Project"
+      - name: Show Clojure env details
+        run: clojure -Sdescribe
+
+      - name: Run tests
+        run: clojure -A:test
+
+      - name: Install VC2017 components
+        # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
+        run: .\.github\VS2017Setup.ps1
 
       - name: Install native-image
         run: $env:GRAALVM_HOME\bin\gu.cmd install native-image
@@ -42,16 +43,8 @@ jobs:
       - name: List GraalVM bin contents
         run: Get-ChildItem -Path "$env:GRAALVM_HOME\bin" | Format-Table
 
-      - name: Show Clojure env details
-        run: clojure -Sdescribe
-
-      - name: Run tests
-        run: clojure -A:test
-
       - name: Build native-image
-        run: clojure -A:native-image
-        env:
-          GRAALVM_HOME: ${{ env.JAVA_HOME }}
+        run: clojure -A:native-image .\.github\NativeImageWithCheese.cmd
 
       - name: Install upx
         run: choco install upx
