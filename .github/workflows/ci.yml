@@ -29,7 +29,7 @@ jobs:
         uses: DeLaGuardo/clojure-lint-action@master
         with:
           clj-kondo-args: --lint src test
-          version: '2020.06.12'
+          version: '2020.06.21'
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
