@@ -38,7 +38,7 @@ jobs:
         run: .\.github\VS2017Setup.ps1
 
       - name: Install native-image
-        run: $env:GRAALVM_HOME\bin\gu.cmd install native-image
+        run: $:env:Path += "$env:GRAALVM_HOME\bin"; gu.cmd install native-image
 
       - name: List GraalVM bin contents
         run: Get-ChildItem -Path "$env:GRAALVM_HOME\bin" | Format-Table
