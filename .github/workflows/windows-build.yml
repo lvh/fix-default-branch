@@ -73,10 +73,13 @@ jobs:
       - name: Install upx
         run: choco install upx
 
+      - name: List directory
+        run: run: Get-ChildItem | Format-Table
+
       - name: Run upx
-        run: upx fix-default-branch
+        run: upx fix-default-branch.exe
 
       - uses: actions/upload-artifact@v2
         with:
-          name: fix-default-branch-win64
-          path: fix-default-branch
+          name: fix-default-branch-amd64.exe
+          path: fix-default-branch.exe
