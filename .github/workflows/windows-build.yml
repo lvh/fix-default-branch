@@ -66,7 +66,7 @@ jobs:
 
       - name: Build native-image
         run: >-
-            .\.github\NativeImageWithCheese.cmd
+            .\windows\NativeImageWithCheese.cmd
               -jar target\fix-default-branch.jar
               --verbose
               --no-fallback
