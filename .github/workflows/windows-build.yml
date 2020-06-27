@@ -15,9 +15,13 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
+          # GitHub documentation sample puts runner.os first. Not sure why, I'd
+          # expect our deps to generally be platform agnostic (not contain any
+          # binaries at all, and if they do, contain multiple archs/platforms).
+          key: maven-${{ hashFiles('deps.edn') }}-${{ runner.os }}
           restore-keys: |
-            ${{ runner.os }}-maven-
+              maven-${{ hashFiles('deps.edn') }}-
+              maven-
 
       - name: Setup GraalVM CE
         uses: DeLaGuardo/setup-graalvm@3
@@ -25,7 +29,7 @@ jobs:
           graalvm-version: '20.1.0.java11'
 
       - name: Setup Clojure manually
-        run: .\.github\ClojureSetupHeadless.ps1
+        run: .\windows\ClojureSetupHeadless.ps1
 
       # Replace "Setup Clojure manually" with this, once it supports Windows:
       # https://github.com/DeLaGuardo/setup-clojure/issues/1
@@ -41,15 +45,9 @@ jobs:
       - name: Run tests
         run: clojure -A:test
 
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('deps.edn') }}
-
       - name: Install VC2017 components
         # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
-        run: .\.github\VS2017Setup.ps1
+        run: .\windows\VS2017Setup.ps1
 
       - name: Install native-image
         run: $:env:Path += "$env:JAVA_HOME\bin"; gu.cmd install native-image
@@ -57,8 +55,24 @@ jobs:
       - name: List GraalVM bin contents
         run: Get-ChildItem -Path "$env:JAVA_HOME\bin" | Format-Table
 
+      - name: Build uberjar
+        run: clj -Sdeps '{:deps {uberdeps {:mvn/version "0.1.10"}}}' -m uberdeps.uberjar
+
       - name: Build native-image
-        run: clojure -A:native-image .\.github\NativeImageWithCheese.cmd
+        run: >-
+            .\.github\NativeImageWithCheese.cmd
+              -jar target\fix-default-branch.jar
+              --verbose
+              --no-fallback
+              --no-server
+              -H:Name=fix-default-branch
+              -H:+ReportExceptionStackTraces
+              --initialize-at-build-time
+              --report-unsupported-elements-at-runtime
+              --allow-incomplete-classpath
+              --enable-https
+              -J-Dclojure.spec.skip-macros=true
+              -J-Dclojure.compiler.direct-linking=true
 
       - name: Install upx
         run: choco install upx
