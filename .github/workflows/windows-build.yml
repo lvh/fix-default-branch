@@ -65,20 +65,7 @@ jobs:
         run: clj -A:uberdeps
 
       - name: Build native-image
-        run: >-
-            .\windows\NativeImageWithCheese.cmd
-              -jar target\fix-default-branch.jar
-              --verbose
-              --no-fallback
-              --no-server
-              -H:Name=fix-default-branch
-              -H:+ReportExceptionStackTraces
-              --initialize-at-build-time
-              --report-unsupported-elements-at-runtime
-              --allow-incomplete-classpath
-              --enable-https
-              -J-Dclojure.spec.skip-macros=true
-              -J-Dclojure.compiler.direct-linking=true
+        run: .\windows\NativeImageWithCheese.cmd
 
       - name: Install upx
         run: choco install upx
