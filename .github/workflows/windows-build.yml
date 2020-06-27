@@ -74,7 +74,7 @@ jobs:
         run: choco install upx
 
       - name: List directory
-        run: run: Get-ChildItem | Format-Table
+        run: Get-ChildItem | Format-Table
 
       - name: Run upx
         run: upx fix-default-branch.exe
