@@ -61,8 +61,11 @@ jobs:
       - name: List GraalVM bin contents
         run: Get-ChildItem -Path "$env:JAVA_HOME\bin" | Format-Table
 
+      - name: Build POM
+        run: clj -Spom
+
       - name: Build uberjar
-        run: clj -A:uberdeps
+        run: clj -A:depstar -m hf.depstar.uberjar fix-default-branch.jar --compile --main io.lvh.fix-default-branch --verbose
 
       - name: Build native-image
         run: .\windows\NativeImageWithCheese.cmd
