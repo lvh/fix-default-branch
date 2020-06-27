@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2016
     steps:
       - uses: actions/checkout@v2
 
@@ -45,9 +45,15 @@ jobs:
       - name: Run tests
         run: clojure -A:test
 
-      - name: Install VC2017 components
-        # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
-        run: .\windows\VS2017Setup.ps1
+      # VC2017 is preinstalled on windows-2016. That's deprecated, but GitHub
+      # has tried (and failed) to get rid of it[*]. It seems a lot of things
+      # depend on VC2017. They've tried to introduce a few backported components
+      # piecemeal, but so far that hasn't covered all the bases, so hopefully
+      # they'll just install VS2017 on windows-2019.
+      # [*]: https://github.com/actions/virtual-environments/issues/68
+      # - name: Install VC2017 components
+      #   # This is necessary for native-image in GraalVM JDK11. JDK8 is more complicated.
+      #   run: .\windows\VS2017Setup.ps1
 
       - name: Install native-image
         run: $:env:Path += "$env:JAVA_HOME\bin"; gu.cmd install native-image
