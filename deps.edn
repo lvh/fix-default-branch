@@ -18,6 +18,10 @@
    :extra-deps {lambdaisland/kaocha {:mvn/version "1.0.632"}
                 org.clojure/test.check {:mvn/version "RELEASE"}}}
 
+  :uberdeps
+  {:extra-deps {uberdeps {:mvn/version "0.1.10"}}
+   :main-opts ["-m" "uberdeps.uberjar"]}
+
   :native-image
   {:main-opts ["-m clj.native-image io.lvh.fix-default-branch"
                "--verbose"

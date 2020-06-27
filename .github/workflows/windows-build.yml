@@ -56,7 +56,7 @@ jobs:
         run: Get-ChildItem -Path "$env:JAVA_HOME\bin" | Format-Table
 
       - name: Build uberjar
-        run: clj -Sdeps '{:deps {uberdeps {:mvn/version "0.1.10"}}}' -m uberdeps.uberjar
+        run: clj -A:uberdeps
 
       - name: Build native-image
         run: >-
